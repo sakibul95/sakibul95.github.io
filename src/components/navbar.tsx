@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { assetPath, siteConfig } from "@/lib/site";
 import { CloseIcon, DownloadIcon, MenuIcon } from "@/components/icons";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
   { label: "Work", href: "#work" },
@@ -67,9 +68,10 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <ThemeToggle className="ml-2" />
           <a
             href="#contact"
-            className="ml-3 inline-flex h-9 items-center rounded-full border border-accent/40 bg-accent/10 px-4 text-sm font-semibold text-accent transition-colors duration-200 hover:border-accent/70 hover:bg-accent hover:text-background"
+            className="ml-2 inline-flex h-9 items-center rounded-full border border-accent/40 bg-accent/10 px-4 text-sm font-semibold text-accent transition-colors duration-200 hover:border-accent/70 hover:bg-accent hover:text-on-accent"
           >
             Get in touch
           </a>
@@ -83,16 +85,23 @@ export function Navbar() {
           </a>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-surface-2 md:hidden"
-        >
-          {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-1.5 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-surface-2"
+          >
+            {open ? (
+              <CloseIcon className="h-5 w-5" />
+            ) : (
+              <MenuIcon className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </nav>
 
       <div

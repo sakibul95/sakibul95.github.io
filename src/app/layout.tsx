@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
 import { assetPath, basePath, origin, siteConfig } from "@/lib/site";
+import { themeColors, themeInitScript } from "@/lib/theme";
 import { techStack } from "@/lib/portfolio";
 import { experience } from "@/lib/experience";
 import { Navbar } from "@/components/navbar";
@@ -87,7 +88,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08090c",
+  /* Both match the dark default rather than the visitor's OS, so the browser
+     chrome agrees with the page on a first paint. theme-toggle.tsx rewrites the
+     `theme-color` tag when light is pinned, and the `color-scheme` declarations
+     in globals.css take over from this hint once the stylesheet lands. */
+  themeColor: themeColors.dark,
   colorScheme: "dark",
 };
 
@@ -129,11 +134,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       data-scroll-behavior="smooth"
       className={`${inter.variable} ${geistMono.variable} h-full`}
+      /* The inline script below writes `data-theme` onto this element before
+         React sees it, which is a mismatch by definition. */
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#top"
-          className="sr-only z-[60] rounded-md bg-accent px-4 py-2 text-sm font-semibold text-background focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+          className="sr-only z-[60] rounded-md bg-accent px-4 py-2 text-sm font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
         >
           Skip to content
         </a>

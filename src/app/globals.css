@@ -10,10 +10,37 @@
   --color-border: var(--site-border);
   --color-accent: var(--site-accent);
   --color-accent-strong: var(--site-accent-strong);
+  --color-accent-alt: var(--site-accent-alt);
+  --color-on-accent: var(--site-on-accent);
+  --color-scrim: var(--site-scrim);
+  --color-veil: var(--site-veil);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  /* Elevation has to be a token, not a per-element modifier: a near-black
+     spread reads as depth on a dark canvas and as grime on a light one.
+     Rewiring the scale itself means `shadow-xl` is right in both themes and
+     no component needs a `shadow-black/40` companion class. */
+  --shadow-lg: 0 10px 15px -3px var(--site-shadow), 0 4px 6px -4px var(--site-shadow);
+  --shadow-xl: 0 20px 25px -5px var(--site-shadow), 0 8px 10px -6px var(--site-shadow);
+  --shadow-2xl: 0 25px 50px -12px var(--site-shadow-strong);
 }
 
+/* ─── Palettes ───────────────────────────────────────────────────────
+   Dark is the default, and unconditionally so: it is what bare `:root`
+   defines, which is what a first-time visitor gets whatever their OS
+   is set to. Light is the pinned exception — the toggle writes
+   `data-theme="light"` and the inline <head> script replays it on
+   later visits.
+
+   Nothing here consults `prefers-color-scheme`. A media query would
+   hand a light-OS visitor the light theme on arrival, which is the
+   opposite of a dark default.
+
+   `--site-on-accent` exists so text on an accent fill is stated rather
+   than inferred: it happens to equal the page background today, but it
+   is a contrast requirement, not a coincidence.
+   ─────────────────────────────────────────────────────────────────── */
 :root {
   color-scheme: dark;
   --site-background: #08090c;
@@ -25,6 +52,54 @@
   --site-border: rgba(255, 255, 255, 0.08);
   --site-accent: #34d399;
   --site-accent-strong: #10b981;
+  --site-accent-alt: #22d3ee;
+  --site-on-accent: #08090c;
+  --site-shadow: rgba(0, 0, 0, 0.4);
+  --site-shadow-strong: rgba(0, 0, 0, 0.55);
+  --site-scrim: rgba(0, 0, 0, 0.7);
+  --site-veil: rgba(0, 0, 0, 0.35);
+  --site-selection: rgba(52, 211, 153, 0.3);
+  --site-grid-dot: rgba(255, 255, 255, 0.06);
+  --site-glow-accent: rgba(52, 211, 153, 0.12);
+  --site-glow-blue: rgba(99, 102, 241, 0.14);
+  --site-accent-glow: rgba(52, 211, 153, 0.6);
+  --site-viz-bg-from: #0c0e12;
+  --site-viz-bg-to: #0a0b0f;
+  --site-viz-panel: #12151c;
+  --site-viz-deep: #0a0b0f;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --site-background: #ffffff;
+  --site-surface: #f8f9fb;
+  --site-surface-2: #eff1f5;
+  --site-foreground: #0a0b0d;
+  --site-muted: #4d525c;
+  /* Darker than a straight mirror of the dark theme's `faint` so the
+     smallest text still clears 4.5:1 on `surface-2`, the dimmest ground it
+     lands on. */
+  --site-faint: #696d76;
+  --site-border: rgba(9, 12, 20, 0.1);
+  /* Emerald deep enough to carry white text (5.5:1) and to be legible as
+     text on white itself (5.4:1) — the bright dark-mode green does neither. */
+  --site-accent: #047857;
+  --site-accent-strong: #065f46;
+  --site-accent-alt: #0e7490;
+  --site-on-accent: #ffffff;
+  --site-shadow: rgba(15, 23, 42, 0.08);
+  --site-shadow-strong: rgba(15, 23, 42, 0.14);
+  --site-scrim: rgba(15, 23, 42, 0.45);
+  --site-veil: rgba(15, 23, 42, 0.16);
+  --site-selection: rgba(4, 120, 87, 0.18);
+  --site-grid-dot: rgba(15, 23, 42, 0.07);
+  --site-glow-accent: rgba(4, 120, 87, 0.1);
+  --site-glow-blue: rgba(79, 70, 229, 0.1);
+  --site-accent-glow: rgba(4, 120, 87, 0.35);
+  --site-viz-bg-from: #f7f9fb;
+  --site-viz-bg-to: #eef2f6;
+  --site-viz-panel: #ffffff;
+  --site-viz-deep: #e7ecf1;
 }
 
 html {
@@ -40,7 +115,7 @@ body {
 }
 
 ::selection {
-  background-color: rgba(52, 211, 153, 0.3);
+  background-color: var(--site-selection);
   color: var(--site-foreground);
 }
 
@@ -50,11 +125,79 @@ body {
   border-radius: 2px;
 }
 
+/* ─── Theme-conditional visibility ───────────────────────────────────
+   Lets the toggle render both icons and hide the inapplicable one in
+   CSS, so the server never has to guess which is correct: no hydration
+   mismatch and no flash. Mirrors the palette rules above — dark is the
+   default, light is the pinned exception.
+
+   These set `display` themselves instead of leaning on a Tailwind
+   `inline-flex` utility, which they would otherwise override —
+   unlayered rules beat anything inside Tailwind's cascade layers.
+   ─────────────────────────────────────────────────────────────────── */
+.theme-when-dark {
+  display: inline-flex;
+}
+
+.theme-when-light {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-when-dark {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-when-light {
+  display: inline-flex;
+}
+
+/* ─── Project visual (SVG) theming ───────────────────────────────────
+   `var()` is not valid inside an SVG presentation attribute, so the
+   opaque surfaces in the project thumbnails are driven by classes
+   instead. Translucent ink in those SVGs uses `currentColor` plus a
+   fill/stroke-opacity attribute, which needs no CSS at all.
+   ─────────────────────────────────────────────────────────────────── */
+.viz-stop-from {
+  stop-color: var(--site-viz-bg-from);
+}
+
+.viz-stop-to {
+  stop-color: var(--site-viz-bg-to);
+}
+
+.viz-stop-panel {
+  stop-color: var(--site-viz-panel);
+}
+
+.viz-stop-accent {
+  stop-color: var(--site-accent);
+}
+
+.viz-base {
+  fill: var(--site-viz-bg-from);
+}
+
+.viz-panel {
+  fill: var(--site-viz-panel);
+}
+
+.viz-deep {
+  fill: var(--site-viz-deep);
+}
+
+.viz-accent-fill {
+  fill: var(--site-accent);
+}
+
+.viz-accent-stroke {
+  stroke: var(--site-accent);
+}
+
 /* Subtle dot-grid backdrop used behind the hero and contact sections. */
 .bg-grid {
   background-image: radial-gradient(
     circle at 1px 1px,
-    rgba(255, 255, 255, 0.06) 1px,
+    var(--site-grid-dot) 1px,
     transparent 0
   );
   background-size: 34px 34px;
@@ -63,19 +206,11 @@ body {
 
 /* Radial accent glow for section backgrounds. */
 .glow-accent {
-  background: radial-gradient(
-    closest-side,
-    rgba(52, 211, 153, 0.12),
-    transparent
-  );
+  background: radial-gradient(closest-side, var(--site-glow-accent), transparent);
 }
 
 .glow-blue {
-  background: radial-gradient(
-    closest-side,
-    rgba(99, 102, 241, 0.14),
-    transparent
-  );
+  background: radial-gradient(closest-side, var(--site-glow-blue), transparent);
 }
 
 /* Entrance animation used by the hero, driven by CSS only. */

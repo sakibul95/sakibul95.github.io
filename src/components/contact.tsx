@@ -32,7 +32,7 @@ export function Contact() {
             </p>
             <h2 className="mx-auto mt-4 max-w-2xl text-balance text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
               Let&apos;s build something{" "}
-              <span className="bg-gradient-to-r from-accent to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-accent to-accent-alt bg-clip-text text-transparent">
                 fast
               </span>
               .
@@ -46,7 +46,7 @@ export function Contact() {
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="group inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-full bg-accent px-7 text-[15px] font-semibold text-background transition-colors duration-200 hover:bg-accent-strong sm:w-auto"
+                className="group inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-full bg-accent px-7 text-[15px] font-semibold text-on-accent transition-colors duration-200 hover:bg-accent-strong sm:w-auto"
               >
                 <MailIcon className="h-[18px] w-[18px]" />
                 {siteConfig.email}
@@ -54,7 +54,7 @@ export function Contact() {
               <a
                 href={assetPath("/cv.pdf")}
                 download={cvFileName}
-                className="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-full border border-accent/40 bg-accent/10 px-7 text-[15px] font-semibold text-accent transition-colors duration-200 hover:border-accent/70 hover:bg-accent hover:text-background sm:w-auto"
+                className="inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-full border border-accent/40 bg-accent/10 px-7 text-[15px] font-semibold text-accent transition-colors duration-200 hover:border-accent/70 hover:bg-accent hover:text-on-accent sm:w-auto"
               >
                 <DownloadIcon className="h-[18px] w-[18px]" />
                 Download CV

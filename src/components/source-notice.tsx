@@ -35,11 +35,11 @@ export function SourceNotice({ projectTitle }: { projectTitle: string }) {
           className="fixed inset-0 z-[100] flex items-center justify-center p-5"
         >
           <div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-scrim backdrop-blur-sm"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
-          <div className="relative w-full max-w-sm rounded-2xl border border-border bg-surface p-6 shadow-2xl shadow-black/50">
+          <div className="relative w-full max-w-sm rounded-2xl border border-border bg-surface p-6 shadow-2xl">
             <button
               type="button"
               onClick={() => setOpen(false)}
@@ -64,7 +64,7 @@ export function SourceNotice({ projectTitle }: { projectTitle: string }) {
 
             <a
               href={`mailto:${siteConfig.email}`}
-              className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 text-[15px] font-semibold text-background transition-colors duration-200 hover:bg-accent-strong"
+              className="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent px-5 text-[15px] font-semibold text-on-accent transition-colors duration-200 hover:bg-accent-strong"
             >
               <MailIcon className="h-4 w-4" />
               {siteConfig.email}

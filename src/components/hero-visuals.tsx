@@ -17,7 +17,7 @@ function MetricCard({
 }) {
   return (
     <div
-      className={`absolute hidden rounded-xl border border-border bg-surface-2 px-4 py-3 shadow-xl shadow-black/40 sm:block ${className}`}
+      className={`absolute hidden rounded-xl border border-border bg-surface-2 px-4 py-3 shadow-xl sm:block ${className}`}
     >
       <p className="font-mono text-[11px] uppercase tracking-widest text-faint">
         {label}
@@ -33,7 +33,7 @@ function MetricCard({
 
 function PortraitCard({ priority = true }: { priority?: boolean }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl shadow-black/50">
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl">
       <Image
         src={portrait}
         alt={`Portrait of ${siteConfig.name}`}
@@ -59,7 +59,7 @@ const terminalLines = [
 
 function TerminalCard({ lines = terminalLines }: { lines?: typeof terminalLines }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-surface/90 shadow-2xl shadow-black/50 backdrop-blur">
+    <div className="overflow-hidden rounded-2xl border border-border bg-surface/90 shadow-2xl backdrop-blur">
       <div className="flex items-center gap-2 border-b border-border bg-surface-2 px-4 py-3">
         <span className="h-3 w-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
         <span className="h-3 w-3 rounded-full bg-[#febc2e]" aria-hidden="true" />

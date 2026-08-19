@@ -8,7 +8,7 @@ import { DownloadIcon, PinIcon } from "@/components/icons";
 const cvFileName = siteConfig.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-cv.pdf";
 
 const typeStyles = {
-  Remote: "border-cyan-400/30 bg-cyan-400/10 text-cyan-300",
+  Remote: "border-accent-alt/30 bg-accent-alt/10 text-accent-alt",
   "On-site": "border-border bg-surface-2 text-muted",
   Hybrid: "border-border bg-surface-2 text-muted",
 } as const;
@@ -35,7 +35,7 @@ export function Experience() {
               <Reveal delay={index * 60}>
                 <span
                   aria-hidden="true"
-                  className="absolute -left-[20px] mt-2 h-2.5 w-2.5 rounded-full border border-accent bg-accent shadow-[0_0_12px_rgba(52,211,153,0.6)]"
+                  className="absolute -left-[20px] mt-2 h-2.5 w-2.5 rounded-full border border-accent bg-accent shadow-[0_0_12px_var(--site-accent-glow)]"
                 />
 
                 <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
@@ -113,7 +113,7 @@ export function Experience() {
           <a
             href={assetPath("/cv.pdf")}
             download={cvFileName}
-            className="mt-12 inline-flex h-11 items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 text-sm font-semibold text-accent transition-colors duration-200 hover:border-accent/70 hover:bg-accent hover:text-background"
+            className="mt-12 inline-flex h-11 items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 text-sm font-semibold text-accent transition-colors duration-200 hover:border-accent/70 hover:bg-accent hover:text-on-accent"
           >
             <DownloadIcon className="h-4 w-4" />
             Download CV (PDF)

@@ -88,7 +88,7 @@ export function Hero() {
             style={{ animationDelay: "90ms" }}
           >
             I engineer{" "}
-            <span className="bg-gradient-to-r from-accent to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent to-accent-alt bg-clip-text text-transparent">
               reliable, scalable
             </span>{" "}
             back-end systems.
@@ -110,7 +110,7 @@ export function Hero() {
           >
             <Link
               href="#work"
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-background transition-colors duration-200 hover:bg-accent-strong"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-semibold text-on-accent transition-colors duration-200 hover:bg-accent-strong"
             >
               View my work
               <ArrowRightIcon className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />

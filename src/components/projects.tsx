@@ -17,8 +17,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             id={project.slug}
             className="aspect-[16/10] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          <span className="absolute top-4 right-4 rounded-full border border-border bg-black/50 px-3 py-1 font-mono text-[11px] text-foreground/80 backdrop-blur-sm">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-veil to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <span className="absolute top-4 right-4 rounded-full border border-border bg-surface/80 px-3 py-1 font-mono text-[11px] text-foreground/80 backdrop-blur-sm">
             {project.year}
           </span>
         </div>
