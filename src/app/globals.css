@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--site-background);
+  --color-surface: var(--site-surface);
+  --color-surface-2: var(--site-surface-2);
+  --color-foreground: var(--site-foreground);
+  --color-muted: var(--site-muted);
+  --color-faint: var(--site-faint);
+  --color-border: var(--site-border);
+  --color-accent: var(--site-accent);
+  --color-accent-strong: var(--site-accent-strong);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+}
+
+:root {
+  color-scheme: dark;
+  --site-background: #08090c;
+  --site-surface: #0c0e12;
+  --site-surface-2: #12151c;
+  --site-foreground: #f4f4f5;
+  --site-muted: #a1a1aa;
+  --site-faint: #71717a;
+  --site-border: rgba(255, 255, 255, 0.08);
+  --site-accent: #34d399;
+  --site-accent-strong: #10b981;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--site-background);
+  color: var(--site-foreground);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: rgba(52, 211, 153, 0.3);
+  color: var(--site-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--site-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Subtle dot-grid backdrop used behind the hero and contact sections. */
+.bg-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 0
+  );
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+}
+
+/* Radial accent glow for section backgrounds. */
+.glow-accent {
+  background: radial-gradient(
+    closest-side,
+    rgba(52, 211, 153, 0.12),
+    transparent
+  );
+}
+
+.glow-blue {
+  background: radial-gradient(
+    closest-side,
+    rgba(99, 102, 241, 0.14),
+    transparent
+  );
+}
+
+/* Entrance animation used by the hero, driven by CSS only. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Hidden state for scroll-reveal. Fallbacks below keep content visible when
+   JavaScript is unavailable or when printing. */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@media print {
+  .reveal-hidden {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Pulsing availability dot. */
+@keyframes ping-dot {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.animate-ping-dot {
+  animation: ping-dot 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-fade-up,
+  .animate-ping-dot,
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Sakibul Islam">
+  <rect width="64" height="64" rx="14" fill="#12151c"/>
+  <g fill="none" stroke="#34d399" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23.5 19.2 15.4 32l8.1 12.8"/>
+    <path d="M40.5 19.2 48.6 32l-8.1 12.8"/>
+  </g>
+</svg>
