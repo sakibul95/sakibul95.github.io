@@ -1,0 +1,58 @@
+# Generates the animated games on the profile README's contribution graph.
+#
+# Both generators write into `dist/`, and the publish step force-pushes that
+# directory to the `output` branch — so the snake output is stashed and merged
+# back in before publishing, otherwise the second generator's run would be the
+# only thing left on the branch.
+name: generate contribution games
+
+on:
+  schedule:
+    # Every day at 00:00 UTC.
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - name: Generate snake
+        uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-snake.svg?palette=github-light
+            dist/github-snake-dark.svg?color_snake=#34d399&color_dots=#0c0e12,#0e4429,#006d32,#26a641,#34d399
+
+      - name: Stash snake output
+        run: |
+          mkdir -p snake
+          mv dist/* snake/
+
+      - name: Generate Pac-Man and Breakout
+        uses: abozanona/pacman-contribution-graph@main
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          games: "pacman,breakout"
+          hide_month_labels: "false"
+
+      - name: Merge snake back into dist
+        run: |
+          mkdir -p dist
+          cp snake/* dist/
+          ls -la dist/
+
+      - name: Publish to the output branch
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
